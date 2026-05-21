@@ -235,12 +235,12 @@ private fun NowPlayingTopBar(
         }
 
         // Overflow (three-dot) button
-        IconButton(onClick = onOverflowClick, modifier = Modifier.size(32.dp)) {
+        IconButton(onClick = onOverflowClick, modifier = Modifier.size(50.dp)) {
             Icon(
                 painter = painterResource(id = android.R.drawable.ic_menu_more),
                 contentDescription = "More options",
                 tint = TextPrimary,
-                modifier = Modifier.size(4.dp)
+                modifier = Modifier.size(30.dp)
             )
         }
     }

@@ -92,7 +92,7 @@ fun SongRow(song: SongItem, isSelected: Boolean) {
 
         Icon(
             painter = painterResource(
-                id = R.drawable.ic_heart_plus
+                id = R.drawable.ic_heart_check
             ),
             contentDescription = if (song.isLiked) "Liked" else "Like",
             tint = if (song.isLiked) MaterialTheme.colorScheme.tertiary else MaterialTheme.colorScheme.onSurfaceVariant,

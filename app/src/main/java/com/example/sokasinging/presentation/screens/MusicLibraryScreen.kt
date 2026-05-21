@@ -4,12 +4,12 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -18,7 +18,6 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.blur
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
@@ -28,6 +27,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.sokasinging.R
+import com.example.sokasinging.presentation.components.AppScaffold
 import com.example.sokasinging.presentation.components.AppTopBar
 import com.example.sokasinging.presentation.components.SmallIconButton
 import com.example.sokasinging.presentation.components.SongRow
@@ -70,22 +70,15 @@ fun MusicLibraryScreen(
 //    check how to enable pause and play based on when player is active and being played/paused for icon change
     onMiniPlayerPaused: Boolean
 ) {
-    Box(modifier = Modifier.fillMaxSize().
-    background(MaterialTheme.colorScheme.background)) {
+    AppScaffold(
+        title = "The Gallery",
+        isHome = true,
+        onIconClick = onMenuClick,
+        onNotificationClick = onNotificationClick
 
-        // ── Scrollable content ────────────────────────────────────────────
-//        Column(
-//            modifier = Modifier
-//                .fillMaxSize()
-//                .verticalScroll(rememberScrollState())
-//                // bottom padding so mini-player doesn't cover last row
-//                .padding(bottom = 100.dp)
-//        )
-            // Top App Bar
-//            AppTopBar(
-//                onMenuClick = onMenuClick,
-//                onNotificationClick = onNotificationClick,
-//            )
+    ) { paddingValues ->
+        Box(modifier = Modifier.fillMaxSize().padding(paddingValues).
+        background(MaterialTheme.colorScheme.background)) {
 
             // Content Canvas
             LazyColumn(
@@ -94,10 +87,10 @@ fun MusicLibraryScreen(
                     .padding(horizontal = 22.dp).padding(bottom = 100.dp),
 //                verticalArrangement = Arrangement.spacedBy(56.dp),
             ) {
-               item { Spacer(modifier = Modifier.height(40.dp)) }  // top padding inside canvas
+                item { Spacer(modifier = Modifier.height(40.dp)) }  // top padding inside canvas
 
 //                 Recently Played
-               item {RecentlyPlayedSection(onViewHistoryClick = onViewHistoryClick)  }
+                item {RecentlyPlayedSection(onViewHistoryClick = onViewHistoryClick)  }
                 item { Spacer(modifier = Modifier.height(56.dp)) }
 //                // Liked Collections
                 item { LikedCollectionsSection() }
@@ -112,22 +105,24 @@ fun MusicLibraryScreen(
                     if (index < songs.size-1){
                         Spacer(modifier = Modifier.height(12.dp))
                     }
-            }
+                }
             }
 
 
-        // ── Floating Mini Player (bottom) ─────────────────────────────────
-        FloatingMiniPlayer(
-            title = nowPlayingTitle,
-            artist = nowPlayingArtist,
-            isPaused = onMiniPlayerPaused,
-            onPlayerClick = onMiniPlayerClick,
-            onPlayPauseClick = onMiniPlayerPlayPause,
-            modifier = Modifier
-                .align(Alignment.BottomCenter)
-                .padding(horizontal = 22.dp, vertical = 24.dp),
-        )
+            // ── Floating Mini Player (bottom) ─────────────────────────────────
+            FloatingMiniPlayer(
+                title = nowPlayingTitle,
+                artist = nowPlayingArtist,
+                isPaused = onMiniPlayerPaused,
+                onPlayerClick = onMiniPlayerClick,
+                onPlayPauseClick = onMiniPlayerPlayPause,
+                modifier = Modifier
+                    .align(Alignment.BottomCenter)
+                    .padding(horizontal = 22.dp, vertical = 24.dp),
+            )
+        }
     }
+
 }
 
 
@@ -576,4 +571,4 @@ fun MusicLibraryScreenPreview() {
 }
 
 
-// scaffold top bar, RecentlyPlayed Header Text, Start populating data from DB
+//RecentlyPlayed Header Text, Start populating data from DB
