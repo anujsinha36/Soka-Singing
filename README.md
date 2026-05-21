@@ -1,28 +1,55 @@
-Soka Singing Application
+Soka Singing
+Android app built for Bharat Soka Gakkai (BSG) members to access songs + lyrics in one place during meetings.
+________________________________________
+Problem
+In BSG meetings, songs are often:
 
-A utility music application for BSG(Bharat Soka Gakkai) Users. 
-Description: This is an Android application that fetches songs and its details like lyrics and playable link, which the users can access to listen the Soka Gakkai songs along with their lyrics in their respective meetings. 
-
-Features Implemented:
-1.	Songs Listing: Fetches and displays a list of Songs from Firebase Realtime Database.
-2.	Songs Details: Allows users to view detailed information about a selected song, such as: lyrics and also play the song using the embedded music player
-3.	Tools and Libraries Used: App follows clean MVVM architecture with proper segregation in data, domain and presentation layer. Android features like Jetpack Compose (for UI), Coroutines with flow for async tasks, Hilt for dependency injection, Navigation compose for navigation have been used. 
-4.	App uses Firebase’s data caching functionality for offline usage. 
-5.	Language: Kotlin
-6.	Minimum SDK: API 26(Android 8.0)
-
-Known Limitations:
-1.	Song playback not available right now in offline mode.
-2.	Language Support: Currently, the app only supports English.
-3.	Limited Test Coverage: The app has not been extensively tested across all Android devices or OS versions.
-Installation:
-1.	Clone the repository:
-2.	Open the project in Android Studio.
-3.	Build the project to download dependencies.
-4.	Run the app on an emulator or physical device.
-
-
-Future Improvements:
-1.	Add user specific experience for the members, by adding account creation options. Allowing users to save their favorite songs for easy access. 
-2.	UI Enhancements: Improve UI/UX for a better user experience, including bottom navigation and settings functionalities. 
-
+1. played from YouTube 
+2. lyrics shared separately via WhatsApp or printed sheets 
+This creates friction—members switch between sources, lyrics are sometimes missing, and the experience feels fragmented.
+Soka Singing solves this by combining audio + lyrics in a single, focused interface, making meetings smoother and distraction-free.
+________________________________________
+What the app does
+1. Browse a list of Soka Gakkai songs 
+2. View full lyrics for each song 
+3. Play songs directly inside the app 
+4. Seek within audio with real-time progress tracking 
+________________________________________
+Tech Stack
+1. Kotlin 
+2. Jetpack Compose (UI) 
+3. MVVM (Clean Architecture) 
+4. Presentation 
+5. Domain 
+6. Data 
+7. ExoPlayer for media playback 
+8. Firebase Realtime Database (songs metadata + URLs + lyrics) 
+9. Coroutines + Flow / StateFlow for async + state handling 
+10. Hilt for dependency injection 
+11. Navigation Compose 
+________________________________________
+Architecture Notes
+1. UI state is driven via StateFlow from ViewModel 
+2. Player is controlled through ViewModel to avoid tight coupling with composables 
+3. Firebase acts as the single source of truth with built-in caching enabled 
+________________________________________
+Limitations
+1. No offline playback support yet 
+2. No background playback or notification controls 
+3. Firebase default caching only (no custom offline-first strategy) 
+4. Limited device testing 
+________________________________________
+Real-world usage
+Used in small group settings to streamline song playback during meetings, reducing dependency on multiple sources like YouTube and WhatsApp.
+________________________________________
+What I’d improve next
+1. Offline-first support (local caching + playback) 
+2. Background playback with media notification controls 
+3. Lyrics synchronization (highlight current line with playback) 
+4. Preloading audio to reduce initial buffering delay 
+5. UI overhaul for faster navigation during live meetings 
+________________________________________
+Setup
+1.	Clone the repo 
+2.	Open in Android Studio 
+3.	Build & run on device/emulator
