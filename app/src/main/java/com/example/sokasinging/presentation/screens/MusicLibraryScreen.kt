@@ -139,7 +139,7 @@ private fun RecentlyPlayedSection(onViewHistoryClick: () -> Unit) {
             Text(
                 text = "Recently Played",
                 color = MaterialTheme.colorScheme.onBackground,
-                style = MaterialTheme.typography.headlineMedium,
+                style = MaterialTheme.typography.headlineLarge,
                 modifier = Modifier.weight(1f),
             )
             // "View History" button
@@ -147,7 +147,7 @@ private fun RecentlyPlayedSection(onViewHistoryClick: () -> Unit) {
                 onClick = onViewHistoryClick,
             ){
                 Text(
-                    text = "VIEW HISTORY",
+                    text = "History -->",
                     color = MaterialTheme.colorScheme.primary,
                     style = MaterialTheme.typography.labelSmall
                 )
@@ -316,10 +316,7 @@ private fun LikedCollectionsSection() {
         Text(
             text = "Liked Collections",
             color = MaterialTheme.colorScheme.onBackground,
-            fontSize = 24.sp,
-            fontWeight = FontWeight.Bold,
-            letterSpacing = (-0.6).sp,
-            lineHeight = 32.sp,
+            style = MaterialTheme.typography.headlineLarge
         )
 
         Row(
@@ -571,4 +568,4 @@ fun MusicLibraryScreenPreview() {
 }
 
 
-//RecentlyPlayed Header Text, Start populating data from DB
+//Start populating data from DB
