@@ -21,6 +21,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.sokasinging.R
+import com.example.sokasinging.ui.theme.AppTheme
 
 // ─── Design Tokens ───────────────────────────────────────────────────────────
 // Extracted from Figma: Soka Player / Now Playing
@@ -528,5 +529,8 @@ private fun SeekBar(
 @Preview(showBackground = true, backgroundColor = 0xFF0E0E0E)
 @Composable
 fun NowPlayingScreenPreview() {
-    NowPlayingScreen()
+    AppTheme {
+        NowPlayingScreen() 
+    }
+
 }

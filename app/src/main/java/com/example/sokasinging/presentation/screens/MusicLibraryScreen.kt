@@ -16,6 +16,11 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -26,11 +31,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.sokasinging.R
+import com.example.sokasinging.data.model.Song
 import com.example.sokasinging.presentation.components.AppScaffold
 import com.example.sokasinging.presentation.components.AppTopBar
 import com.example.sokasinging.presentation.components.SmallIconButton
 import com.example.sokasinging.presentation.components.SongRow
+import com.example.sokasinging.presentation.viewmodel.SongsListUiState
+import com.example.sokasinging.presentation.viewmodel.SongsListViewModel
 import com.example.sokasinging.ui.theme.*
 
 // ─── Data Models ─────────────────────────────────────────────────────────────
@@ -52,14 +61,41 @@ data class CollectionCard(
     val title: String,
     val subtitle: String,
 )
-// ─────────────────────────────────────────────────────────────────────────────
 
-/**
- * Music Library screen for Soka Player.
- */
 @Composable
 fun MusicLibraryScreen(
-    songs: List<SongItem> = previewSongs(),
+    nowPlayingTitle: String = "Ethereal Drift",
+    nowPlayingArtist: String = "Solaris Collective",
+    onMenuClick: () -> Unit = {},
+    onNotificationClick: () -> Unit = {},
+    onViewHistoryClick: () -> Unit = {},
+    onMiniPlayerClick: () -> Unit = {},
+    onMiniPlayerPlayPause: () -> Unit = {},
+    onMiniPlayerPaused: Boolean,
+    viewModel: SongsListViewModel = hiltViewModel() // Hilt logic here
+) {
+    val uiState by viewModel.uiState.collectAsState()
+
+    // Pass the state down to the stateless content
+    MusicLibraryScreenContent(
+        uiState = uiState,
+        nowPlayingTitle = nowPlayingTitle,
+        nowPlayingArtist = nowPlayingArtist,
+        onMenuClick = onMenuClick,
+        onNotificationClick = onNotificationClick,
+        onViewHistoryClick = onViewHistoryClick,
+        onMiniPlayerClick = onMiniPlayerClick,
+//        onPlayPauseClick = onMiniPlayerPlayPause,
+        onMiniPlayerPaused = onMiniPlayerPaused
+    )
+}
+
+
+
+@Composable
+fun MusicLibraryScreenContent(
+//    songs: List<Song>,
+    uiState: SongsListUiState,
     nowPlayingTitle: String = "Ethereal Drift",
     nowPlayingArtist: String = "Solaris Collective",
     onMenuClick: () -> Unit = {},
@@ -68,8 +104,20 @@ fun MusicLibraryScreen(
     onMiniPlayerClick: () -> Unit = {},
     onMiniPlayerPlayPause: () -> Unit = {},
 //    check how to enable pause and play based on when player is active and being played/paused for icon change
-    onMiniPlayerPaused: Boolean
+    onMiniPlayerPaused: Boolean,
 ) {
+    var searchMode by remember { mutableStateOf(false) }
+    var searchText by remember { mutableStateOf("") }
+
+    val filteredSongs = if (searchText.isBlank()) {
+        uiState.songs
+    } else {
+        uiState.songs.filter {
+            it.songTitle.contains(searchText, ignoreCase = true)
+        }
+    }
+
+
     AppScaffold(
         title = "The Gallery",
         isHome = true,
@@ -90,19 +138,20 @@ fun MusicLibraryScreen(
                 item { Spacer(modifier = Modifier.height(40.dp)) }  // top padding inside canvas
 
 //                 Recently Played
-                item {RecentlyPlayedSection(onViewHistoryClick = onViewHistoryClick)  }
-                item { Spacer(modifier = Modifier.height(56.dp)) }
+//                item {RecentlyPlayedSection(onViewHistoryClick = onViewHistoryClick)  }
+//                item { Spacer(modifier = Modifier.height(56.dp)) }
 //                // Liked Collections
-                item { LikedCollectionsSection() }
+//                item { LikedCollectionsSection() }
                 item { Spacer(modifier = Modifier.height(56.dp)) }
                 item { AllSongsSectionHeader() }
                 // All Songs
-                itemsIndexed(items = songs,
-                    key = {_, item -> item.title}
+                itemsIndexed(items = filteredSongs,
+                    key = {_, item -> item.songTitle}
                 )
                 {index, item->
-                    SongRow(song = item, isSelected = item.isPlaying)
-                    if (index < songs.size-1){
+                    SongRow(song = item, index = index, isSelected = false)
+//                    item.isPlaying
+                    if (index < filteredSongs.size-1){
                         Spacer(modifier = Modifier.height(12.dp))
                     }
                 }
@@ -187,7 +236,8 @@ private fun FeaturedRecentCard() {
             .clip(RoundedCornerShape(24.dp))
             .background(
                 Brush.linearGradient(
-                    colors = listOf(MaterialTheme.colorScheme.primary, MaterialTheme.colorScheme.secondary, MaterialTheme.colorScheme.tertiary)
+                    colors = listOf(MaterialTheme.colorScheme.primary, MaterialTheme.colorScheme.secondary,
+                        MaterialTheme.colorScheme.tertiary)
                 )
             )
     ) {
@@ -563,7 +613,18 @@ private fun previewSongs() = listOf(
 @Composable
 fun MusicLibraryScreenPreview() {
     AppTheme {
-        MusicLibraryScreen(onMiniPlayerPaused = false)
+        MusicLibraryScreenContent(
+            onMiniPlayerPaused = false,
+            uiState = SongsListUiState(
+                songs = listOf(
+                    Song("Shadow of the Colossus", 2022),
+                    Song("Ultraviolet Memories", 2022),
+                    Song("Borealis", 2022),
+                    Song("Something", 2022),
+                    Song("Newish", 2022)
+                )
+            )
+        )
     }
 }
 
