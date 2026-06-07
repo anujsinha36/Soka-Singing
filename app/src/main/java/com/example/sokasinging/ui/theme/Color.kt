@@ -48,7 +48,7 @@ val ColorScheme.purpleDark: Color get() = Purple900
 val ColorScheme.cardGradient1: Brush
     get() = Brush.linearGradient(
         listOf(
-            Color(0xFF74B9FF), Color(0xFF0984E3)),
+            Color(0xFFFF8FA9), Color(0xFF0984E3)),
         start = Offset(0f, 0f),
         end = Offset(300f, 600f)
     )
@@ -64,14 +64,14 @@ val ColorScheme.cardGradient2: Brush
 val ColorScheme.cardGradient3: Brush
     get() = Brush.linearGradient(
         listOf(
-            Color(0xFF55EFC4), Color(0xFF00B894)),
+            Color(0xFFFFD6E5), Color(0xFF00B894)),
         start = Offset(0f, 0f),
         end = Offset(300f, 600f)
     )
 val ColorScheme.cardGradient4: Brush
     get() = Brush.linearGradient(
         listOf(
-            Color(0xFFFFD32A), Color(0xFFFF6B35)),
+            Color(0xFFFFF176), Color(0xFFFF6B35)),
         start = Offset(0f, 0f),
         end = Offset(300f, 600f)
     )
@@ -85,7 +85,7 @@ val ColorScheme.cardGradient5: Brush
 val ColorScheme.cardGradient6: Brush
     get() = Brush.linearGradient(
         listOf(
-            Color(0xFF00CEC9), Color(0xFF0984E3)),
+            Color(0xFFC9FFFC), Color(0xFF0984E3)),
         start = Offset(0f, 0f),
         end = Offset(300f, 600f)
     )

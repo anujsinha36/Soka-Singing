@@ -138,10 +138,10 @@ fun MusicLibraryScreenContent(
                 item { Spacer(modifier = Modifier.height(40.dp)) }  // top padding inside canvas
 
 //                 Recently Played
-//                item {RecentlyPlayedSection(onViewHistoryClick = onViewHistoryClick)  }
-//                item { Spacer(modifier = Modifier.height(56.dp)) }
+                item {RecentlyPlayedSection(onViewHistoryClick = onViewHistoryClick)  }
+                item { Spacer(modifier = Modifier.height(56.dp)) }
 //                // Liked Collections
-//                item { LikedCollectionsSection() }
+                item { LikedCollectionsSection() }
                 item { Spacer(modifier = Modifier.height(56.dp)) }
                 item { AllSongsSectionHeader() }
                 // All Songs
@@ -207,7 +207,7 @@ private fun RecentlyPlayedSection(onViewHistoryClick: () -> Unit) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(300.dp)
+                .height(280.dp)
                 .horizontalScroll(rememberScrollState()),
             horizontalArrangement = Arrangement.spacedBy(20.dp),
         ) {
@@ -221,7 +221,12 @@ private fun RecentlyPlayedSection(onViewHistoryClick: () -> Unit) {
                 colors = MaterialTheme.colorScheme.cardGradient2)
             SecondaryRecentCard(title = "Quartz Rain", genre = "PRISM",
                 colors = MaterialTheme.colorScheme.cardGradient3)
-//                colors = listOf(MaterialTheme.colorScheme.secondary, MaterialTheme.colorScheme.purpleDark)
+            SecondaryRecentCard(title = "Quartz Rain", genre = "PRISM",
+                colors = MaterialTheme.colorScheme.cardGradient4)
+            SecondaryRecentCard(title = "Quartz Rain", genre = "PRISM",
+                colors = MaterialTheme.colorScheme.cardGradient5)
+            SecondaryRecentCard(title = "Quartz Rain", genre = "PRISM",
+                colors = MaterialTheme.colorScheme.cardGradient6)
             ExploreMoreCard()
         }
     }
